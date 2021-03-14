@@ -18,6 +18,14 @@ gcc -g -Wall -c lib.c
 gcc -g -Wall app-c.o lib.o  -o app-c
 ```
 
+### Execute 
+
+```
+$ ./app-c
+set("nombre", 1, 0x123)
+get("nombre", 1) -> 0x123
+```
+
 ## init-set-get service based on mqueue (POSIX queue)
 
 ### Compile 
@@ -35,16 +43,26 @@ gcc -g -Wall            lib.o lib-client.o lib-server.o  -o lib-server  -lrt
 
 ### Execute 
 
-*Server*
+*TIP: POSIX queues are used for communicating processes in the same machine*
 
+<html>
+<table>
+<tr><th>Step</th><th>Client</th><th>Server</th></tr>
+<tr>
+<td>1</td>
+<td></td>
+<td>
+ 
 ```
 $ ./lib-server
- 1 = init(nombre, 10);
- 1 = set(nombre, 1, 0x123);
- 1 = get(nombre, 1, 0x123);
 ```
+ 
+</td>
+</tr>
 
-*Client*
+<tr>
+<td>2</td>
+<td>
 
 ```
 $ ./app-d
@@ -52,19 +70,47 @@ d_set("nombre", 1, 0x123)
 d_get("nombre", 1) -> 0x123
 ```
 
-## init-set-get service based on sockets
+</td>
+<td>
+ 
+```
+
+ 1 = init(nombre, 10);
+ 1 = set(nombre, 1, 0x123);
+ 1 = get(nombre, 1, 0x123);
+```
+ 
+</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td></td>
+<td>
+
+```
+^Caccept: Interrupted system call
+```
+
+</td>
+</tr>
+</table>
+</html>
+
+
+## init-set-get service based on *sockets*
 
 ### Compile 
 
 ```
-$ cd distributed-mqueue
+$ cd distributed-sockets
 $ make
 gcc -g -Wall -c app-d.c
 gcc -g -Wall -c lib-client.c
 gcc -g -Wall -c lib.c
-gcc -g -Wall -lrt app-d.o lib.o lib-client.o       -o app-d  -lrt
+gcc -g -Wall  app-d.o lib.o lib-client.o       -o app-d
 gcc -g -Wall -c lib-server.c
-gcc -g -Wall            lib.o lib-client.o lib-server.o  -o lib-server  -lrt
+gcc -g -Wall            lib.o lib-client.o lib-server.o  -o lib-server
 ```
 
 ### Execute 
