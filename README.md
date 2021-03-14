@@ -1,12 +1,12 @@
 # nanodt: Nano Distributed Table (v2.0)
 
 ## Tabla de contenidos
-  * [Initial init-set-get service](#initial-init-set-get-service)
-  * [init-set-get service based on mqueue (POSIX queue)](#init-set-get-service-based-on-mqueue-posix-queue)
-  * [init-set-get service based on sockets](#init-set-get-service-based-on-sockets)
+  * [Initial init-set-get service](#initial-non-distributed-service)
+  * [Distributed service based on mqueue (POSIX queue)](#distributed-service-based-on-mqueue-posix-queue)
+  * [Distributed service based on sockets](#distributed-service-based-on-sockets)
 
 
-## Initial init-set-get service
+## Initial non-distributed service
 
 ### Compile 
 
@@ -26,7 +26,7 @@ set("nombre", 1, 0x123)
 get("nombre", 1) -> 0x123
 ```
 
-## init-set-get service based on mqueue (POSIX queue)
+## Distributed service based on mqueue (POSIX queue)
 
 ### Compile 
 
@@ -98,7 +98,9 @@ d_get("nombre", 1) -> 0x123
 </html>
 
 
-## init-set-get service based on *sockets*
+## Distributed service based on *sockets*
+
+*TIP: Before execute in two different machine please update the server IP address in lib-client.c*
 
 ### Compile 
 
