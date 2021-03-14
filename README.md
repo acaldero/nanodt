@@ -69,21 +69,55 @@ gcc -g -Wall            lib.o lib-client.o lib-server.o  -o lib-server  -lrt
 
 ### Execute 
 
-*Server*
-
+<html>
+<table>
+<tr><th>Step</th><th>Client</th><th>Server</th></tr>
+<tr>
+<td>1</td>
+<td></td>
+<td>
+ 
 ```
 $ ./lib-server
- 1 = init(nombre, 10);
- 1 = set(nombre, 1, 0x123);
- 1 = get(nombre, 1, 0x123);
-^Caccept: Interrupted system call
 ```
+ 
+</td>
+</tr>
 
-*Client*
+<tr>
+<td>2</td>
+<td>
 
 ```
 $ ./app-d
 d_set("nombre", 1, 0x123)
 d_get("nombre", 1) -> 0x123
 ```
+
+</td>
+<td>
+ 
+```
+
+ 1 = init(nombre, 10);
+ 1 = set(nombre, 1, 0x123);
+ 1 = get(nombre, 1, 0x123);
+```
+ 
+</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td></td>
+<td>
+
+```
+^Caccept: Interrupted system call
+```
+
+</td>
+</tr>
+</table>
+</html>
 
