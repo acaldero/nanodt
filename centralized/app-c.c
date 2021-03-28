@@ -27,8 +27,6 @@
 
 int   N = 10 ;
 char *A = "nombre" ;
-int   E =  1 ;
-int   V = 0x123 ;
 
 
 int main ( int argc, char *argv[] )
@@ -43,21 +41,27 @@ int main ( int argc, char *argv[] )
         exit(-1) ;
     }
 
-    // set
-    ret = set (A, E, V) ;
-    if (ret < 0) {
-        printf("set: error code %d\n", ret) ;
-        exit(-1) ;
+    for (int i=0; i<N; i++)
+    {
+	    // set
+	    ret = set (A, 100+i, i) ;
+	    if (ret < 0) {
+		printf("set: error code %d\n", ret) ;
+		exit(-1) ;
+	    }
+	    printf("set(\"%s\", %d, 0x%x)\n", A, 100+i, i) ;
     }
-    printf("set(\"%s\", %d, 0x%x)\n", A, E, V) ;
 
-    // get
-    ret = get (A, E, &val) ;
-    if (ret < 0) {
-        printf("get: error code %d\n", ret) ;
-        exit(-1) ;
+    for (int i=0; i<N; i++)
+    {
+	    // get
+	    ret = get (A, 100+i, &val) ;
+	    if (ret < 0) {
+		printf("get: error code %d\n", ret) ;
+		exit(-1) ;
+	    }
+	    printf("get(\"%s\", %d) -> 0x%x\n", A, 100+i, val) ;
     }
-    printf("get(\"%s\", %d) -> 0x%x\n", A, E, val) ;
 
     return 0 ;
 }

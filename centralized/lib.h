@@ -23,13 +23,13 @@
 #define LIB_H
 
    // Inicializar un array distribuido de N números enteros.
-   int init (char  *nombre,  int  N) ;
+   int init ( char  *nombre,  int  N ) ;
 
    // Inserta el valor en la posición i del array nombre.
-   int set (char *nombre, int i, int valor) ;
+   int set ( char *nombre, int i, int valor ) ;
 
    // Recuperar el valor del elemento i del array nombre. 
-   int get (char*nombre, int i, int *valor) ;
+   int get ( char *nombre, int i, int *valor ) ;
 
 #endif
 
