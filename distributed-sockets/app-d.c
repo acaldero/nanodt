@@ -37,7 +37,7 @@ int main ( int argc, char *argv[] )
     // init
     ret = d_init(A, N) ;
     if (ret < 0) {
-        printf("init: error code %d\n", ret) ;
+        printf("d_init: error code %d\n", ret) ;
         exit(-1) ;
     }
 
@@ -46,7 +46,7 @@ int main ( int argc, char *argv[] )
 	    // set
 	    ret = d_set (A, 100+i, i) ;
 	    if (ret < 0) {
-		printf("set: error code %d\n", ret) ;
+		printf("d_set: error code %d\n", ret) ;
 		exit(-1) ;
 	    }
 	    printf("set(\"%s\", %d, 0x%x)\n", A, 100+i, i) ;
@@ -57,7 +57,7 @@ int main ( int argc, char *argv[] )
 	    // get
 	    ret = d_get (A, 100+i, &val) ;
 	    if (ret < 0) {
-		printf("get: error code %d\n", ret) ;
+		printf("d_get: error code %d\n", ret) ;
 		exit(-1) ;
 	    }
 	    printf("get(\"%s\", %d) -> 0x%x\n", A, 100+i, val) ;

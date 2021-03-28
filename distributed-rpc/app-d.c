@@ -27,8 +27,6 @@
 
 int   N = 10 ;
 char *A = "nombre" ;
-int   E =  1 ;
-int   V = 0x123 ;
 
 
 int main ( int argc, char *argv[] )
@@ -57,24 +55,30 @@ int main ( int argc, char *argv[] )
         clnt_perror(clnt, "d_init_1: ") ;
         exit(-1) ;
     }
-    printf("init(\"%s\", %d) -> %d\n", A, E, ret) ;
+    printf("d_init(\"%s\", %d) -> %d\n", A, N, ret) ;
 
-    // set
-    retval = d_set_1(A, N, V, &ret, clnt) ;
-    if (retval != RPC_SUCCESS) {
-        clnt_perror(clnt, "d_set_1: ") ;
-        exit(-1) ;
+    for (int i=0; i<N; i++)
+    {
+	    // set
+	    retval = d_set_1(A, 100+i, i, &ret, clnt) ;
+	    if (retval != RPC_SUCCESS) {
+		clnt_perror(clnt, "d_set_1: ") ;
+		exit(-1) ;
+	    }
+	    printf("d_set(\"%s\", %d, 0x%x) -> %d\n", A, 100+i, i, ret) ;
     }
-    printf("set(\"%s\", %d, 0x%x) -> %d\n", A, E, V, ret) ;
 
-    // get
-    struct get_res getarg ;
-    retval = d_get_1(A, N, &getarg, clnt) ;
-    if (retval != RPC_SUCCESS) {
-        clnt_perror(clnt, "d_get_1: ") ;
-        exit(-1) ;
+    for (int i=0; i<N; i++)
+    {
+	    // get
+	    struct get_res getarg ;
+	    retval = d_get_1(A, 100+i, &getarg, clnt) ;
+	    if (retval != RPC_SUCCESS) {
+		clnt_perror(clnt, "d_get_1: ") ;
+		exit(-1) ;
+	    }
+	    printf("d_get(\"%s\", %d) -> 0x%x\n", A, 100+i, getarg.value) ;
     }
-    printf("get(\"%s\", %d) -> 0x%x\n", A, N, getarg.value) ;
 
     /* Finalizar sesi'on RPC */
     clnt_destroy(clnt) ;
