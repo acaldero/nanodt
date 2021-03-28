@@ -1,7 +1,7 @@
 
 CC=gcc
 CFLAGS=-g -Wall
-LDFLAGS=-lrt
+LDFLAGS=
 
 
 all :: app-d lib-server

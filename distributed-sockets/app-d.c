@@ -27,8 +27,6 @@
 
 int   N = 10 ;
 char *A = "nombre" ;
-int   E =  1 ;
-int   V = 0x123 ;
 
 
 int main ( int argc, char *argv[] )
@@ -39,25 +37,31 @@ int main ( int argc, char *argv[] )
     // init
     ret = d_init(A, N) ;
     if (ret < 0) {
-        printf("d_init: error code %d\n", ret) ;
+        printf("init: error code %d\n", ret) ;
         exit(-1) ;
     }
 
-    // set
-    ret = d_set (A, E, V) ;
-    if (ret < 0) {
-        printf("d_set: error code %d\n", ret) ;
-        exit(-1) ;
+    for (int i=0; i<N; i++)
+    {
+	    // set
+	    ret = d_set (A, 100+i, i) ;
+	    if (ret < 0) {
+		printf("set: error code %d\n", ret) ;
+		exit(-1) ;
+	    }
+	    printf("set(\"%s\", %d, 0x%x)\n", A, 100+i, i) ;
     }
-    printf("d_set(\"%s\", %d, 0x%x)\n", A, E, V) ;
 
-    // get
-    ret = d_get (A, E, &val) ;
-    if (ret < 0) {
-        printf("d_get: error code %d\n", ret) ;
-        exit(-1) ;
+    for (int i=0; i<N; i++)
+    {
+	    // get
+	    ret = d_get (A, 100+i, &val) ;
+	    if (ret < 0) {
+		printf("get: error code %d\n", ret) ;
+		exit(-1) ;
+	    }
+	    printf("get(\"%s\", %d) -> 0x%x\n", A, 100+i, val) ;
     }
-    printf("d_get(\"%s\", %d) -> 0x%x\n", A, E, val) ;
 
     return 0 ;
 }

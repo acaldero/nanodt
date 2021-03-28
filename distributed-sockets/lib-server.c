@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <stdarg.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -30,6 +31,18 @@
 #include "lib.h"
 #include "lib-mesg.h"
 
+int d_printf ( const char *format, ... )
+{
+     int n = 0 ;
+     va_list ap ;
+
+     va_start(ap, format) ;
+#ifdef DEBUG
+     n = vprintf(format, ap) ;
+#endif
+     va_end(ap) ;
+     return n ;
+}
 
 void tratar_peticion ( int arg )
 {
@@ -44,18 +57,18 @@ void tratar_peticion ( int arg )
      {
          case 1: // INIT
                  pr.status = init(pr.name, pr.value) ;
-		 printf(" %d = init(%s, %d);\n",    pr.status, pr.name, pr.value) ;
+		 d_printf(" %d = init(%s, %d);\n",    pr.status, pr.name, pr.value) ;
                  break ;
          case 2: // SET
                  pr.status = set(pr.name, pr.i, pr.value) ;
-		 printf(" %d = set(%s, %d, 0x%x);\n", pr.status, pr.name, pr.i, pr.value) ;
+		 d_printf(" %d = set(%s, %d, 0x%x);\n", pr.status, pr.name, pr.i, pr.value) ;
                  break ;
          case 3: // GET
                  pr.status = get(pr.name, pr.i, &(pr.value)) ;
-		 printf(" %d = get(%s, %d, 0x%x);\n", pr.status, pr.name, pr.i, pr.value) ;
+		 d_printf(" %d = get(%s, %d, 0x%x);\n", pr.status, pr.name, pr.i, pr.value) ;
                  break ;
 	 default:
-		 printf(" unknown(%s, %d, %d);\n", pr.name, pr.i, pr.value) ;
+		 d_printf(" unknown(%s, %d, %d);\n", pr.name, pr.i, pr.value) ;
                  break ;
      }
 

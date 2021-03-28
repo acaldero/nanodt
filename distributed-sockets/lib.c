@@ -22,6 +22,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "lib.h"
 
 
@@ -29,9 +30,9 @@
  * Internal data
  */
 
-int    a_neltos = 0 ;  // = [ “key1”,     “key2”,   …   “keyN” ] ;
-int  * a_values[100] ; // = [ [0…N1], [0…N2], … [0…NN] ] ;
-char * a_keys  [100] ;
+int    a_neltos = 0 ;
+int  **a_values ; // = [ [0…N1], [0…N2], ... [0…NN] ] ;
+char **a_keys   ; // = [ "key1", "key2", ... "keyN" ] ;
 
 
 /*
@@ -52,16 +53,37 @@ int buscar ( char *nombre )
      return index;
 }
 
-int insertar (char  *nombre,  int  N)
+int insertar ( char *nombre, int N )
 {
+     void *ret ;
+
+     // add new vector => [ [0…N1], [0…N2], ... [0…NN] ]
+     ret = realloc(a_values, (a_neltos+1)*sizeof(int *)) ;
+     if (NULL == ret) {
+         perror("realloc: ") ;
+         return -1 ; // en caso de error => -1
+     }
+     a_values = (int **)ret ;
+
+     // new vector
      a_values[a_neltos] = malloc(N*sizeof(int)) ;
      if (a_values[a_neltos] == NULL) {
+         perror("malloc: ") ;
          return -1 ; // en caso de error => -1
      }
 
+     // add new key    => [ "key1", "key2", ... "keyN" ]
+     ret = realloc(a_keys, (a_neltos+1)*sizeof(char *)) ;
+     if (NULL == ret) {
+         perror("realloc: ") ;
+         return -1 ; // en caso de error => -1
+     }
+     a_keys = (char **)ret ;
+
+     // new key
      a_keys[a_neltos] = strdup(nombre) ;
      if (a_keys[a_neltos] == NULL) {
-         free(a_values[a_neltos]);
+         perror("malloc: ") ;
          return -1 ; // en caso de error => -1
      }
 
