@@ -169,3 +169,9 @@ d_get("nombre", 1) -> 0x123
 </table>
 </html>
 
+
+## Additional information
+
+ * [Introduction to lab 1 (Spanish)](https://www.youtube.com/watch?v=LWeuoihcKyI)
+ * [Introduction to lab 2 (Spanish)](https://www.youtube.com/watch?v=tmFu_JenEi0)
+
