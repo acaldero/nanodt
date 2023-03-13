@@ -27,7 +27,7 @@ get("nombre", 1) -> 0x123
 
 ```mermaid
 sequenceDiagram
-    app-c          ->> lib.c: request lib.h API
-    lib.c          ->> app-c: return result of API call
+    app-c   ->> lib.c: request lib.h API
+    lib.c   ->> app-c: return result of API call
 ```
 

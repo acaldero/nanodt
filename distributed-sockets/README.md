@@ -1,25 +1,24 @@
 # nanodt: Nano Distributed Table (v2.0)
 
-## Distributed service based on mqueue (POSIX queue)
 
+## Distributed service based on *sockets*
+
+*TIP: Before execute in two different machine please update the server IP address in lib-client.c*
 
 ### Compile 
 
 ```
-$ cd distributed-mqueue
+$ cd distributed-sockets
 $ make
 gcc -g -Wall -c app-d.c
 gcc -g -Wall -c lib-client.c
 gcc -g -Wall -c lib.c
-gcc -g -Wall -lrt app-d.o lib.o lib-client.o       -o app-d  -lrt
+gcc -g -Wall  app-d.o lib.o lib-client.o       -o app-d
 gcc -g -Wall -c lib-server.c
-gcc -g -Wall            lib.o lib-client.o lib-server.o  -o lib-server  -lrt
+gcc -g -Wall            lib.o lib-client.o lib-server.o  -o lib-server
 ```
 
-
 ### Execute 
-
-*TIP: POSIX queues are used for communicating processes in the same machine*
 
 <html>
 <table>
@@ -73,16 +72,6 @@ d_get("nombre", 1) -> 0x123
 </table>
 </html>
 
-
-*TIP: POSIX queues can be visible from command line:*
-
-``` bash
-sudo mkdir /dev/mqueue
-sudo mount -t mqueue none /dev/mqueue
-ls -las /dev/mqueue
-```
-
-
 ### Arquitecture 
 
 ```mermaid
@@ -94,4 +83,5 @@ sequenceDiagram
     lib-server.c   ->> lib-client.c: return remote result
     lib-client.c   ->> app-d: return result of the distributed API call
 ```
+
 

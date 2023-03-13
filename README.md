@@ -30,8 +30,8 @@ get("nombre", 1) -> 0x123
 
 ```mermaid
 sequenceDiagram
-    app-c          ->> lib.c: request lib.h API
-    lib.c          ->> app-c: return result of API call
+    app-c   ->> lib.c: request lib.h API
+    lib.c   ->> app-c: return result of API call
 ```
 
 
@@ -106,7 +106,7 @@ d_get("nombre", 1) -> 0x123
 </table>
 </html>
 
-*TIP: POSIX queues can be visible from command line:
+*TIP: POSIX queues can be visible from command line:*
 
 ``` bash
 sudo mkdir /dev/mqueue
