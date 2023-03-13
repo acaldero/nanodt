@@ -26,6 +26,15 @@ set("nombre", 1, 0x123)
 get("nombre", 1) -> 0x123
 ```
 
+### Arquitecture
+
+```mermaid
+sequenceDiagram
+    app-c          ->> lib.c: request lib.h API
+    lib.c          ->> app-c: return result of API call
+```
+
+
 ## Distributed service based on mqueue (POSIX queue)
 
 ### Compile 
@@ -96,6 +105,26 @@ d_get("nombre", 1) -> 0x123
 </tr>
 </table>
 </html>
+
+*TIP: POSIX queues can be visible from command line:
+
+``` bash
+sudo mkdir /dev/mqueue
+sudo mount -t mqueue none /dev/mqueue
+ls -las /dev/mqueue
+```
+
+### Arquitecture 
+
+```mermaid
+sequenceDiagram
+    app-d          ->> lib-client.c: request lib.h API in a distributed way
+    lib-client.c   ->> lib-server.c: request remote API
+    lib-server.c   ->> lib.c: request lib.h API call
+    lib.c          ->> lib-server.c: return API call result
+    lib-server.c   ->> lib-client.c: return remote result
+    lib-client.c   ->> app-d: return result of the distributed API call
+```
 
 
 ## Distributed service based on *sockets*
@@ -168,6 +197,18 @@ d_get("nombre", 1) -> 0x123
 </tr>
 </table>
 </html>
+
+### Arquitecture 
+
+```mermaid
+sequenceDiagram
+    app-d          ->> lib-client.c: request lib.h API in a distributed way
+    lib-client.c   ->> lib-server.c: request remote API
+    lib-server.c   ->> lib.c: request lib.h API call
+    lib.c          ->> lib-server.c: return API call result
+    lib-server.c   ->> lib-client.c: return remote result
+    lib-client.c   ->> app-d: return result of the distributed API call
+```
 
 
 ## Additional information
